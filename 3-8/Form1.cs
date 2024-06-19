@@ -20,20 +20,13 @@ namespace _3_8
 
         private void Search_B_Click(object sender, EventArgs e)
         {
-            
             string pattern = Pattern_TB.Text;
             string email;
             if (string.IsNullOrWhiteSpace(pattern))
             {
-                // Поиск всех почтовых адресов
-                email = @"\b[A-Za-z][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b";
+                pattern = @"\w{1,}";
             }
-            else
-            {
-                // Поиск почтовых адресов по паттерну
-                email = $@"\b[A-Za-z][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\.{pattern}\b";
-            }
-
+            email = $@"\b[\w-[\d]]\w*@(\w+\.)+{pattern}\b";
             MatchCollection res = Regex.Matches(Source_TB.Text, email);
 
             Result_TB.Clear();
@@ -47,7 +40,7 @@ namespace _3_8
 
         private void Replace_B_Click(object sender, EventArgs e)
         {
-            string email = @"\b[A-Za-z][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b";
+            string email = @"\b[A-Za-z]\w*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b";
 
             string resultText = Regex.Replace(Source_TB.Text, email, match =>
             {
